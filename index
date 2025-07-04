@@ -92,13 +92,49 @@
       color: #004080;
     }
 
+    .result table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+    }
+
+    .result th, .result td {
+      border: 1px solid #ccc;
+      padding: 0.75rem;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    .result th {
+      background: #dceeff;
+      color: #004080;
+      font-weight: bold;
+    }
+
+    .result .section-title {
+      font-size: 1.25rem;
+      color: #2c3e50;
+      font-weight: bold;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      border-left: 6px solid #5ba4e5;
+      padding-left: 0.5rem;
+    }
+
+    .result tr:nth-child(2) td {
+      background: #f8fbff;
+    }
+
     .hidden {
       display: none;
     }
   </style>
 </head>
 <body>
-  <h1>識人魔法心理測驗</h1>
+    <h1>識人魔法心理測驗</h1>
+    <p>探索你內在的特質與潛能！</p>
+    <p>這是一份深入了解自我風格的心理測驗，透過 5 組直覺式選擇，發掘你在人際互動、思考方式、情感反應中的潛藏傾向。</p>
+    <p>🧠 共 5 題，每題 8 選 4 →　4 選 2 →　2 選 1，約 3～5 分鐘完成。</p>
   <div id="quiz"></div>
   <div id="result" class="result hidden"></div>
 
@@ -271,23 +307,43 @@
       const organizer = sum(["掌控", "事務"]);
       const emotion = sum(["感覺", "人際"]);
 
-      resultDiv.innerHTML += `<h3>各特質分數</h3>`;
-      Object.entries(scores).sort((a, b) => b[1] - a[1]).forEach(([trait, score]) => {
-        resultDiv.innerHTML += `<p><strong>${trait}</strong>：${score} 分</p>`;
-      });
+      resultDiv.innerHTML = `
+        <h2>測驗結果</h2>
+        <div class="section-title">壹、八種風格類型分析一覽表</div>
+        <table>
+          <tr>
+          <th>果斷</th><th>分析</th><th>創意</th><th>理想</th>
+          </tr>
+        <tr>
+        <td>${scores["果斷"] || 0}</td><td>${scores["分析"] || 0}</td><td>${scores["創意"] || 0}</td><td>${scores["理想"] || 0}</td>
+        </tr>
+        <tr>
+        <th>掌控</th><th>事務</th><th>感覺</th><th>人際</th>
+        </tr>
+        <tr>
+      <td>${scores["掌控"] || 0}</td><td>${scores["事務"] || 0}</td><td>${scores["感覺"] || 0}</td><td>${scores["人際"] || 0}</td>
+  </tr>
+</table>
 
-      resultDiv.innerHTML += `<h3>風格傾向分析</h3>`;
-      resultDiv.innerHTML += `<p><strong>外向 vs 內向：</strong> ${extro} vs ${intro} → ${extro > intro ? "外向傾向" : extro < intro ? "內向傾向" : "平衡型"}</p>`;
-      resultDiv.innerHTML += `<p><strong>理性 vs 感性：</strong> ${rational} vs ${emotional} → ${rational > emotional ? "理性傾向" : rational < emotional ? "感性傾向" : "平衡型"}</p>`;
-      resultDiv.innerHTML += `<p><strong>行動 vs 思考：</strong> ${action} vs ${thinking} → ${action > thinking ? "行動傾向" : action < thinking ? "思考傾向" : "平衡型"}</p>`;
+        <div class="section-title">貳、三種風格特質分析一覽表</div>
+        <table>
+          <tr><th>外向 vs 內向</th><th>理性 vs 感性</th><th>行動 vs 思考</th></tr>
+          <tr>
+            <td>${extro} vs ${intro}</td>
+            <td>${rational} vs ${emotional}</td>
+            <td>${action} vs ${thinking}</td>
+          </tr>
+        </table>
 
-      resultDiv.innerHTML += `<h3>四種風格類型分析</h3>`;
-      resultDiv.innerHTML += `<p><strong>理智型：</strong> ${logic} 分</p>`;
-      resultDiv.innerHTML += `<p><strong>開創型：</strong> ${pioneer} 分</p>`;
-      resultDiv.innerHTML += `<p><strong>組織型：</strong> ${organizer} 分</p>`;
-      resultDiv.innerHTML += `<p><strong>情感型：</strong> ${emotion} 分</p>`;
+        <div class="section-title">參、四種風格類型分析一覽表</div>
+        <table>
+          <tr><th>理智</th><th>開創</th><th>組織</th><th>情感</th></tr>
+          <tr>
+            <td>${logic}</td><td>${pioneer}</td><td>${organizer}</td><td>${emotion}</td>
+          </tr>
+        </table>
+      `;
     }
-
     renderStep();
   </script>
 </body>
