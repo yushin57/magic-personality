@@ -125,6 +125,18 @@
       background: #f8fbff;
     }
 
+    #start {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    #start input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
     .hidden {
       display: none;
     }
@@ -135,7 +147,12 @@
     <p>探索你內在的特質與潛能！</p>
     <p>這是一份深入了解自我風格的心理測驗，透過 5 組直覺式選擇，發掘你在人際互動、思考方式、情感反應中的潛藏傾向。</p>
     <p>🧠 共 5 題，每題 8 選 4 →　4 選 2 →　2 選 1，約 3～5 分鐘完成。</p>
-  <div id="quiz"></div>
+  <div id="start">
+    <label for="nameInput">請輸入姓名：</label>
+    <input type="text" id="nameInput" />
+    <button id="startBtn">開始測驗</button>
+  </div>
+  <div id="quiz" class="hidden"></div>
   <div id="result" class="result hidden"></div>
 
   <script>
@@ -211,6 +228,7 @@
     let currentStep = 0;
     let previousSelection = [];
     let scores = {};
+    let userName = "";
 
     function renderStep() {
       const quiz = document.getElementById("quiz");
@@ -291,7 +309,7 @@
       document.getElementById("quiz").classList.add("hidden");
       const resultDiv = document.getElementById("result");
       resultDiv.classList.remove("hidden");
-      resultDiv.innerHTML = "<h2>測驗結果</h2>";
+      resultDiv.innerHTML = `<h2>${userName} 的測驗結果</h2>`;
 
       const sum = traits => traits.reduce((acc, t) => acc + (scores[t] || 0), 0);
 
@@ -307,8 +325,8 @@
       const organizer = sum(["掌控", "事務"]);
       const emotion = sum(["感覺", "人際"]);
 
-      resultDiv.innerHTML = `
-        <h2>測驗結果</h2>
+      resultDiv.innerHTML = `␊
+        <h2>${userName} 的測驗結果</h2>
         <div class="section-title">壹、八種風格類型分析一覽表</div>
         <table>
           <tr>
@@ -344,7 +362,18 @@
         </table>
       `;
     }
-    renderStep();
+    document.getElementById("startBtn").onclick = () => {
+      const input = document.getElementById("nameInput");
+      const name = input.value.trim();
+      if (!name) {
+        alert("請輸入姓名");
+        return;
+      }
+      userName = name;
+      document.getElementById("start").classList.add("hidden");
+      document.getElementById("quiz").classList.remove("hidden");
+      renderStep();
+    };
   </script>
 </body>
 </html>
