@@ -71,6 +71,16 @@
       background: #315f86;
     }
 
+    .start {
+      margin-bottom: 1rem;
+    }
+
+    .start input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-right: 0.5rem;
+    }
+
     .result {
       background: #f2faff;
       padding: 1.5rem;
@@ -135,7 +145,12 @@
     <p>探索你內在的特質與潛能！</p>
     <p>這是一份深入了解自我風格的心理測驗，透過 5 組直覺式選擇，發掘你在人際互動、思考方式、情感反應中的潛藏傾向。</p>
     <p>🧠 共 5 題，每題 8 選 4 →　4 選 2 →　2 選 1，約 3～5 分鐘完成。</p>
-  <div id="quiz"></div>
+  <div id="start" class="start">
+    <label for="nameInput">姓名：</label>
+    <input type="text" id="nameInput" />
+    <button id="startBtn">開始測驗</button>
+  </div>
+  <div id="quiz" class="hidden"></div>
   <div id="result" class="result hidden"></div>
 
   <script>
@@ -211,6 +226,7 @@
     let currentStep = 0;
     let previousSelection = [];
     let scores = {};
+    let userName = "";
 
     function renderStep() {
       const quiz = document.getElementById("quiz");
@@ -291,7 +307,8 @@
       document.getElementById("quiz").classList.add("hidden");
       const resultDiv = document.getElementById("result");
       resultDiv.classList.remove("hidden");
-      resultDiv.innerHTML = "<h2>測驗結果</h2>";
+      const now = new Date();
+      const nowStr = now.toLocaleString();
 
       const sum = traits => traits.reduce((acc, t) => acc + (scores[t] || 0), 0);
 
@@ -307,8 +324,14 @@
       const organizer = sum(["掌控", "事務"]);
       const emotion = sum(["感覺", "人際"]);
 
+      const record = { name: userName || "匿名", time: now.toISOString(), scores };
+      const history = JSON.parse(localStorage.getItem("quizHistory") || "[]");
+      history.push(record);
+      localStorage.setItem("quizHistory", JSON.stringify(history));
+
       resultDiv.innerHTML = `
-        <h2>測驗結果</h2>
+        <h2>${userName || '匿名'} 的測驗結果</h2>
+        <p>完成時間：${nowStr}</p>
         <div class="section-title">壹、八種風格類型分析一覽表</div>
         <table>
           <tr>
@@ -344,7 +367,12 @@
         </table>
       `;
     }
-    renderStep();
+    document.getElementById("startBtn").onclick = () => {
+      userName = document.getElementById("nameInput").value.trim() || "匿名";
+      document.getElementById("start").classList.add("hidden");
+      document.getElementById("quiz").classList.remove("hidden");
+      renderStep();
+    };
   </script>
 </body>
 </html>
