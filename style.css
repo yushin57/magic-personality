@@ -22,6 +22,8 @@ body {
   min-height: 100vh;
   font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
   color: var(--ink);
+  word-break: keep-all;
+  overflow-wrap: break-word;
   background-color: var(--bg-deep);
   background-image:
     radial-gradient(circle at 50% 50%, rgba(27, 16, 48, 0.35), rgba(27, 16, 48, 0.78) 70%),
@@ -216,9 +218,16 @@ button.secondary:hover {
 }
 
 /* 這個區塊會被 html2canvas 截成分享用的圖片，所以要有自己的背景，
-   不能只靠 <body> 的 gradient（截圖範圍外的頁面背景不會被一起截進來） */
+   不能只靠 <body> 的背景圖（截圖範圍外的頁面背景不會被一起截進來）。
+   跟 body 用同一張 bg.jpg，讓分享出去的截圖跟網站本身視覺一致。 */
 .capture-card {
-  background: radial-gradient(circle at 50% 0%, var(--bg-mid), var(--bg-deep) 70%);
+  background-color: var(--bg-deep);
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(27, 16, 48, 0.4), rgba(27, 16, 48, 0.82) 70%),
+    url("bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   padding: 1.5rem;
   border-radius: 18px;
   border: 1px solid var(--card-border);
