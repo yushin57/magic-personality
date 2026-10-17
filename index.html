@@ -4,347 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>識人魔法心理測驗</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #eaf6ff, #ffffff);
-      padding: 2rem;
-      max-width: 720px;
-      margin: auto;
-      color: #333;
-    }
+  <meta name="description" content="5 組直覺式選擇，看穿你的內在原型。你是智略魔法師、幻視預言家、秩序守護者，還是共感療癒師？">
 
-    h1 {
-      color: #2c3e50;
-      text-align: center;
-      margin-bottom: 2rem;
-    }
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="識人魔法心理測驗">
+  <meta property="og:description" content="5 組直覺式選擇，看穿你的內在原型，約 3～5 分鐘完成。">
+  <meta property="og:image" content="https://yushin57.github.io/magic-personality/og-image.png">
+  <meta property="og:url" content="https://yushin57.github.io/magic-personality/">
+  <meta name="twitter:card" content="summary_large_image">
 
-    .question {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      font-weight: bold;
-    }
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='80'%3E%E2%9C%A8%3C/text%3E%3C/svg%3E">
 
-    .options {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700&display=swap" rel="stylesheet">
 
-    .option {
-      flex: 1 1 45%;
-      padding: 0.75rem 1rem;
-      background: #ffffff;
-      border: 2px solid #ccc;
-      border-radius: 8px;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s ease-in-out;
-    }
-
-    .option:hover {
-      border-color: #4682b4;
-      background-color: #f0f8ff;
-    }
-
-    .option.selected {
-      background: #cce5ff;
-      border-color: #4682b4;
-      font-weight: bold;
-    }
-
-    button {
-      display: inline-block;
-      padding: 0.6rem 1.2rem;
-      font-size: 1rem;
-      background: #4682b4;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 1rem;
-    }
-
-    button:hover {
-      background: #315f86;
-    }
-
-    .result {
-      background: #f2faff;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    }
-
-    .result h2, .result h3 {
-      color: #2c3e50;
-      margin-top: 1rem;
-    }
-
-    .result p {
-      line-height: 1.6;
-      margin: 0.3rem 0;
-    }
-
-    .result strong {
-      color: #004080;
-    }
-
-    .result table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 2rem;
-    }
-
-    .result th, .result td {
-      border: 1px solid #ccc;
-      padding: 0.75rem;
-      text-align: center;
-      font-size: 1rem;
-    }
-
-    .result th {
-      background: #dceeff;
-      color: #004080;
-      font-weight: bold;
-    }
-
-    .result .section-title {
-      font-size: 1.25rem;
-      color: #2c3e50;
-      font-weight: bold;
-      margin-top: 1.5rem;
-      margin-bottom: 0.5rem;
-      border-left: 6px solid #5ba4e5;
-      padding-left: 0.5rem;
-    }
-
-    .result tr:nth-child(2) td {
-      background: #f8fbff;
-    }
-
-    .hidden {
-      display: none;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>識人魔法心理測驗</h1>
-    <p>探索你內在的特質與潛能！</p>
-    <p>這是一份深入了解自我風格的心理測驗，透過 5 組直覺式選擇，發掘你在人際互動、思考方式、情感反應中的潛藏傾向。</p>
-    <p>🧠 共 5 題，每題 8 選 4 →　4 選 2 →　2 選 1，約 3～5 分鐘完成。</p>
-  <div id="quiz"></div>
-  <div id="result" class="result hidden"></div>
+  <div class="wrap">
+    <h1>✨ 識人魔法心理測驗</h1>
+    <p class="intro">探索你內在的特質與潛能！這是一份深入了解自我風格的心理測驗，透過 5 組直覺式選擇，發掘你在人際互動、思考方式、情感反應中的潛藏傾向。</p>
+    <p class="intro hint">🧠 共 5 題，每題 8 選 4 → 4 選 2 → 2 選 1，約 3～5 分鐘完成。</p>
 
-  <script>
-    const sets = [
-      {
-        title: "題組一",
-        options: [
-          { label: "獨當一面", trait: "果斷" },
-          { label: "協調支援", trait: "掌控" },
-          { label: "研判資訊", trait: "分析" },
-          { label: "按部就班", trait: "事務" },
-          { label: "創意思考", trait: "創意" },
-          { label: "傾聽他人", trait: "感覺" },
-          { label: "規劃遠景", trait: "理想" },
-          { label: "協助他人", trait: "人際" }
-        ]
-      },
-      {
-        title: "題組二",
-        options: [
-          { label: "明快決策", trait: "果斷" },
-          { label: "執行計畫", trait: "掌控" },
-          { label: "研析對策", trait: "分析" },
-          { label: "井然有序", trait: "事務" },
-          { label: "發揮想像", trait: "創意" },
-          { label: "感性溫馨", trait: "感覺" },
-          { label: "不受約束", trait: "理想" },
-          { label: "團隊合作", trait: "人際" }
-        ]
-      },
-      {
-        title: "題組三",
-        options: [
-          { label: "實事求是", trait: "果斷" },
-          { label: "現況掌握", trait: "掌控" },
-          { label: "邏輯分析", trait: "分析" },
-          { label: "資訊彙整", trait: "事務" },
-          { label: "創作研發", trait: "創意" },
-          { label: "同理情感", trait: "感覺" },
-          { label: "彈性多元", trait: "理想" },
-          { label: "人際經營", trait: "人際" }
-        ]
-      },
-      {
-        title: "題組四",
-        options: [
-          { label: "重視成效", trait: "果斷" },
-          { label: "建立程序", trait: "掌控" },
-          { label: "推理思考", trait: "分析" },
-          { label: "行政處理", trait: "事務" },
-          { label: "獨特創新", trait: "創意" },
-          { label: "支持他人", trait: "感覺" },
-          { label: "推銷想法", trait: "理想" },
-          { label: "接觸人群", trait: "人際" }
-        ]
-      },
-      {
-        title: "題組五",
-        options: [
-          { label: "影響他人", trait: "果斷" },
-          { label: "組織管理", trait: "掌控" },
-          { label: "追根究柢", trait: "分析" },
-          { label: "細節處理", trait: "事務" },
-          { label: "實驗嘗試", trait: "創意" },
-          { label: "營造氣氛", trait: "感覺" },
-          { label: "開發市場", trait: "理想" },
-          { label: "協調衝突", trait: "人際" }
-        ]
-      }
-    ];
+    <div id="progress-wrap">
+      <div id="progress-track"><div id="progress-bar"></div></div>
+      <div id="progress-label"></div>
+    </div>
 
-    let currentSet = 0;
-    let currentStep = 0;
-    let previousSelection = [];
-    let scores = {};
+    <div id="quiz"></div>
+    <div id="result" class="result hidden"></div>
+  </div>
 
-    function renderStep() {
-      const quiz = document.getElementById("quiz");
-      quiz.innerHTML = "";
+  <div id="toast" class="toast"></div>
 
-      const set = sets[currentSet];
-      const stepPrompt = [
-        `(${set.title}) 請從下列 8 項中選出最符合你的 4 項特質：`,
-        `(${set.title}) 請從剛剛選的 4 項中選出你最重視的 2 項：`,
-        `(${set.title}) 請從剛剛的 2 項中選出最能代表你的那一項：`
-      ];
-
-      const stepMax = [4, 2, 1];
-      const stepType = ["multi", "multi", "single"];
-      const stepPoints = [1, 2, 2];
-
-      const prompt = document.createElement("div");
-      prompt.className = "question";
-      prompt.innerText = stepPrompt[currentStep];
-      quiz.appendChild(prompt);
-
-      const optionsDiv = document.createElement("div");
-      optionsDiv.className = "options";
-      const options = currentStep === 0 ? set.options : previousSelection;
-
-      options.forEach(opt => {
-        const btn = document.createElement("div");
-        btn.className = "option";
-        btn.innerText = opt.label;
-        btn.onclick = () => {
-          if (stepType[currentStep] === "multi") {
-            btn.classList.toggle("selected");
-            const selected = optionsDiv.querySelectorAll(".option.selected");
-            if (selected.length > stepMax[currentStep]) {
-              btn.classList.remove("selected");
-            }
-          } else {
-            optionsDiv.querySelectorAll(".option").forEach(b => b.classList.remove("selected"));
-            btn.classList.add("selected");
-          }
-        };
-        optionsDiv.appendChild(btn);
-      });
-      quiz.appendChild(optionsDiv);
-
-      const nextBtn = document.createElement("button");
-      nextBtn.innerText = currentSet === sets.length - 1 && currentStep === 2 ? "看結果" : "下一步";
-      nextBtn.onclick = () => {
-        const selected = optionsDiv.querySelectorAll(".option.selected");
-        if (selected.length !== stepMax[currentStep]) {
-          alert(`請選擇 ${stepMax[currentStep]} 項`);
-          return;
-        }
-        const selections = Array.from(selected).map(el => el.innerText);
-        const resultOptions = options.filter(o => selections.includes(o.label));
-        resultOptions.forEach(opt => {
-          scores[opt.trait] = (scores[opt.trait] || 0) + stepPoints[currentStep];
-        });
-        previousSelection = resultOptions;
-
-        if (currentStep < 2) {
-          currentStep++;
-        } else {
-          currentStep = 0;
-          currentSet++;
-        }
-
-        if (currentSet < sets.length) {
-          renderStep();
-        } else {
-          showResult();
-        }
-      };
-      quiz.appendChild(nextBtn);
-    }
-
-    function showResult() {
-      document.getElementById("quiz").classList.add("hidden");
-      const resultDiv = document.getElementById("result");
-      resultDiv.classList.remove("hidden");
-      resultDiv.innerHTML = "<h2>測驗結果</h2>";
-
-      const sum = traits => traits.reduce((acc, t) => acc + (scores[t] || 0), 0);
-
-      const extro = sum(["果斷", "掌控", "理想", "人際"]);
-      const intro = sum(["分析", "事務", "創意", "感覺"]);
-      const rational = sum(["果斷", "分析", "掌控", "事務"]);
-      const emotional = sum(["創意", "感覺", "理想", "人際"]);
-      const action = sum(["掌控", "事務", "感覺", "人際"]);
-      const thinking = sum(["果斷", "分析", "創意", "理想"]);
-
-      const logic = sum(["果斷", "分析"]);
-      const pioneer = sum(["創意", "理想"]);
-      const organizer = sum(["掌控", "事務"]);
-      const emotion = sum(["感覺", "人際"]);
-
-      resultDiv.innerHTML = `
-        <h2>測驗結果</h2>
-        <div class="section-title">壹、八種風格類型分析一覽表</div>
-        <table>
-          <tr>
-          <th>果斷</th><th>分析</th><th>創意</th><th>理想</th>
-          </tr>
-        <tr>
-        <td>${scores["果斷"] || 0}</td><td>${scores["分析"] || 0}</td><td>${scores["創意"] || 0}</td><td>${scores["理想"] || 0}</td>
-        </tr>
-        <tr>
-        <th>掌控</th><th>事務</th><th>感覺</th><th>人際</th>
-        </tr>
-        <tr>
-      <td>${scores["掌控"] || 0}</td><td>${scores["事務"] || 0}</td><td>${scores["感覺"] || 0}</td><td>${scores["人際"] || 0}</td>
-  </tr>
-</table>
-
-        <div class="section-title">貳、三種風格特質分析一覽表</div>
-        <table>
-          <tr><th>外向 vs 內向</th><th>理性 vs 感性</th><th>行動 vs 思考</th></tr>
-          <tr>
-            <td>${extro} vs ${intro}</td>
-            <td>${rational} vs ${emotional}</td>
-            <td>${action} vs ${thinking}</td>
-          </tr>
-        </table>
-
-        <div class="section-title">參、四種風格類型分析一覽表</div>
-        <table>
-          <tr><th>理智</th><th>開創</th><th>組織</th><th>情感</th></tr>
-          <tr>
-            <td>${logic}</td><td>${pioneer}</td><td>${organizer}</td><td>${emotion}</td>
-          </tr>
-        </table>
-      `;
-    }
-    renderStep();
-  </script>
+  <script src="quiz-data.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,324 @@
+/* style.css — 識人魔法心理測驗：神秘命理風主題 */
+
+:root {
+  --bg-deep: #1b1030;
+  --bg-mid: #2d1b4e;
+  --gold: #e8c878;
+  --gold-soft: #d4af7a;
+  --ink: #f3eefc;
+  --ink-dim: #c9bfe0;
+  --card-bg: rgba(255, 255, 255, 0.06);
+  --card-border: rgba(232, 200, 120, 0.35);
+  --card-border-selected: #e8c878;
+  --radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  color: var(--ink);
+  background: radial-gradient(circle at 50% 0%, var(--bg-mid), var(--bg-deep) 70%);
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-family: "Noto Serif TC", serif;
+  text-align: center;
+  font-size: 2rem;
+  margin: 0 0 0.5rem;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+.intro {
+  text-align: center;
+  color: var(--ink-dim);
+  line-height: 1.7;
+  margin: 0.4rem 0;
+}
+
+.intro.hint {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+/* 進度條 */
+#progress-wrap {
+  margin: 2rem 0 1.5rem;
+}
+
+#progress-track {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gold-soft), var(--gold));
+  box-shadow: 0 0 10px rgba(232, 200, 120, 0.6);
+  transition: width 0.35s ease;
+}
+
+#progress-label {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ink-dim);
+  margin-top: 0.5rem;
+  letter-spacing: 0.04em;
+}
+
+/* 題目卡片 */
+.question {
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1.25rem;
+  color: var(--ink);
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.option {
+  flex: 1 1 45%;
+  padding: 1rem 1.1rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-align: center;
+  font-size: 1rem;
+  backdrop-filter: blur(6px);
+  transition: all 0.2s ease-in-out;
+}
+
+.option:hover {
+  border-color: var(--gold-soft);
+  background: rgba(232, 200, 120, 0.1);
+  transform: translateY(-2px);
+}
+
+.option.selected {
+  border-color: var(--card-border-selected);
+  background: rgba(232, 200, 120, 0.18);
+  box-shadow: 0 0 16px rgba(232, 200, 120, 0.35);
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.actions {
+  text-align: center;
+}
+
+button {
+  font-family: inherit;
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+  color: #2a1a40;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  box-shadow: 0 4px 18px rgba(232, 200, 120, 0.45);
+  transform: translateY(-1px);
+}
+
+button.secondary {
+  background: transparent;
+  border: 1px solid var(--card-border-selected);
+  color: var(--gold);
+}
+
+button.secondary:hover {
+  background: rgba(232, 200, 120, 0.1);
+}
+
+/* 結果頁 */
+.result {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.archetype-hero {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(232, 200, 120, 0.12), rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--card-border);
+  margin-bottom: 1.75rem;
+}
+
+.archetype-icons {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.archetype-title {
+  font-family: "Noto Serif TC", serif;
+  font-size: 1.7rem;
+  color: var(--gold);
+  margin: 0.25rem 0;
+  letter-spacing: 0.03em;
+}
+
+.archetype-subtitle {
+  color: var(--ink-dim);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.keywords {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.keyword-tag {
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(232, 200, 120, 0.15);
+  border: 1px solid var(--card-border);
+  font-size: 0.85rem;
+  color: var(--gold);
+}
+
+.archetype-desc {
+  line-height: 1.8;
+  color: var(--ink);
+  text-align: left;
+  margin: 1rem auto 0;
+  max-width: 560px;
+}
+
+.archetype-desc + .archetype-desc {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--card-border);
+}
+
+.section-title {
+  font-size: 1.1rem;
+  color: var(--gold);
+  font-weight: bold;
+  margin: 1.75rem 0 0.75rem;
+  border-left: 4px solid var(--gold-soft);
+  padding-left: 0.6rem;
+}
+
+.result table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.result th,
+.result td {
+  border: 1px solid var(--card-border);
+  padding: 0.6rem;
+  text-align: center;
+}
+
+.result th {
+  background: rgba(232, 200, 120, 0.1);
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.result td {
+  color: var(--ink-dim);
+}
+
+.share-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 2rem 0 1rem;
+}
+
+.cta {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--card-border);
+  color: var(--ink-dim);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.cta a {
+  color: var(--gold);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid var(--gold);
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+  background: var(--gold);
+  color: #2a1a40;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .option {
+    flex: 1 1 100%;
+  }
+  h1 {
+    font-size: 1.6rem;
+  }
+  .archetype-title {
+    font-size: 1.4rem;
+  }
+}
