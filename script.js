@@ -108,8 +108,6 @@ function renderStep() {
   quiz.appendChild(actions);
 }
 
-let lastResultSummary = "";
-
 function showResult() {
   document.getElementById("quiz").classList.add("hidden");
   document.getElementById("progress-wrap").classList.add("hidden");
@@ -119,33 +117,54 @@ function showResult() {
   const completedAt = new Date();
   const sum = traits => traits.reduce((acc, t) => acc + (scores[t] || 0), 0);
 
-  const archetypeScores = {
-    logic: sum(["果斷", "分析"]),
-    pioneer: sum(["創意", "理想"]),
-    organizer: sum(["掌控", "事務"]),
-    emotion: sum(["感覺", "人際"])
-  };
+  const extro = sum(["果斷", "掌控", "理想", "人際"]);
+  const intro = sum(["分析", "事務", "創意", "感覺"]);
+  const rational = sum(["果斷", "分析", "掌控", "事務"]);
+  const emotional = sum(["創意", "感覺", "理想", "人際"]);
+  const action = sum(["掌控", "事務", "感覺", "人際"]);
+  const thinking = sum(["果斷", "分析", "創意", "理想"]);
 
-  const ranked = Object.entries(archetypeScores).sort((a, b) => b[1] - a[1]);
-  const primary = archetypes[ranked[0][0]];
-  const secondary = ranked[1][1] > 0 ? archetypes[ranked[1][0]] : null;
-
-  lastResultSummary = secondary ? `${primary.name} ✕ ${secondary.name}` : primary.name;
-
-  const keywordTags = [...primary.keywords, ...(secondary ? secondary.keywords : [])]
-    .map(k => `<span class="keyword-tag">${k}</span>`)
-    .join("");
+  const logic = sum(["果斷", "分析"]);
+  const pioneer = sum(["創意", "理想"]);
+  const organizer = sum(["掌控", "事務"]);
+  const emotion = sum(["感覺", "人際"]);
 
   resultDiv.innerHTML = `
-    <div class="archetype-hero">
-      <div class="result-meta"><strong>${escapeHtml(userName)}</strong> ・ ${formatDateTime(completedAt)}</div>
-      <div class="archetype-icons">${primary.icon}${secondary ? " " + secondary.icon : ""}</div>
-      <div class="archetype-title">${primary.name}${secondary ? " ✕ " + secondary.name : ""}</div>
-      <div class="archetype-subtitle">${primary.subtitle}${secondary ? " × " + secondary.subtitle : ""}</div>
-      <div class="keywords">${keywordTags}</div>
-      <p class="archetype-desc">${primary.description}</p>
-      ${secondary ? `<p class="archetype-desc">${secondary.description}</p>` : ""}
+    <div class="result-header">
+      <div class="result-meta"><strong>${escapeHtml(userName)}</strong> 的測驗結果 ・ ${formatDateTime(completedAt)}</div>
     </div>
+
+    <div class="section-title">壹、八種風格類型分析一覽表</div>
+    <table>
+      <tr><th>果斷</th><th>分析</th><th>創意</th><th>理想</th></tr>
+      <tr>
+        <td>${scores["果斷"] || 0}</td><td>${scores["分析"] || 0}</td>
+        <td>${scores["創意"] || 0}</td><td>${scores["理想"] || 0}</td>
+      </tr>
+      <tr><th>掌控</th><th>事務</th><th>感覺</th><th>人際</th></tr>
+      <tr>
+        <td>${scores["掌控"] || 0}</td><td>${scores["事務"] || 0}</td>
+        <td>${scores["感覺"] || 0}</td><td>${scores["人際"] || 0}</td>
+      </tr>
+    </table>
+
+    <div class="section-title">貳、三種風格特質分析一覽表</div>
+    <table>
+      <tr><th>外向 vs 內向</th><th>理性 vs 感性</th><th>行動 vs 思考</th></tr>
+      <tr>
+        <td>${extro} vs ${intro}</td>
+        <td>${rational} vs ${emotional}</td>
+        <td>${action} vs ${thinking}</td>
+      </tr>
+    </table>
+
+    <div class="section-title">參、四種風格類型分析一覽表</div>
+    <table>
+      <tr><th>理智</th><th>開創</th><th>組織</th><th>情感</th></tr>
+      <tr>
+        <td>${logic}</td><td>${pioneer}</td><td>${organizer}</td><td>${emotion}</td>
+      </tr>
+    </table>
 
     <div class="share-row">
       <button id="btn-share">🔗 分享結果</button>
@@ -163,7 +182,7 @@ function bindResultActions() {
   shareBtn.onclick = async () => {
     const shareData = {
       title: "識人魔法心理測驗",
-      text: `我的識人魔法原型是「${lastResultSummary}」，來測測你是哪一型！`,
+      text: "我剛完成了識人魔法心理測驗，一起來測測看！",
       url: window.location.href.split("?")[0]
     };
     if (navigator.share) {

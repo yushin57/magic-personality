@@ -208,13 +208,9 @@ button.secondary:hover {
   to { opacity: 1; transform: translateY(0); }
 }
 
-.archetype-hero {
+.result-header {
   text-align: center;
-  padding: 2rem 1.5rem;
-  border-radius: 18px;
-  background: linear-gradient(160deg, rgba(232, 200, 120, 0.12), rgba(255, 255, 255, 0.03));
-  border: 1px solid var(--card-border);
-  margin-bottom: 1.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .result-meta {
@@ -230,58 +226,6 @@ button.secondary:hover {
 
 .result-meta strong {
   color: var(--gold);
-}
-
-.archetype-icons {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.archetype-title {
-  font-family: "Noto Serif TC", serif;
-  font-size: 1.7rem;
-  color: var(--gold);
-  margin: 0.25rem 0;
-  letter-spacing: 0.03em;
-}
-
-.archetype-subtitle {
-  color: var(--ink-dim);
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.keywords {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 1rem 0;
-}
-
-.keyword-tag {
-  padding: 0.3rem 0.9rem;
-  border-radius: 999px;
-  background: rgba(232, 200, 120, 0.15);
-  border: 1px solid var(--card-border);
-  font-size: 0.85rem;
-  color: var(--gold);
-}
-
-.archetype-desc {
-  line-height: 1.8;
-  color: var(--ink);
-  text-align: left;
-  margin: 1rem auto 0;
-  max-width: 560px;
-}
-
-.archetype-desc + .archetype-desc {
-  margin-top: 1.25rem;
-  padding-top: 1.25rem;
-  border-top: 1px dashed var(--card-border);
 }
 
 .section-title {
@@ -373,8 +317,5 @@ button.secondary:hover {
   }
   h1 {
     font-size: 1.6rem;
-  }
-  .archetype-title {
-    font-size: 1.4rem;
   }
 }
