@@ -5,6 +5,18 @@ let currentSet = 0;
 let currentStep = 0;
 let previousSelection = [];
 let scores = {};
+let userName = "";
+
+function escapeHtml(str) {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function formatDateTime(d) {
+  const pad = n => String(n).padStart(2, "0");
+  return `${d.getFullYear()}/${pad(d.getMonth() + 1)}/${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
 
 const stepPrompt = set => [
   `(${set.title}) 請從下列 8 項中選出最符合你的 4 項特質：`,
@@ -104,14 +116,8 @@ function showResult() {
   const resultDiv = document.getElementById("result");
   resultDiv.classList.remove("hidden");
 
+  const completedAt = new Date();
   const sum = traits => traits.reduce((acc, t) => acc + (scores[t] || 0), 0);
-
-  const extro = sum(["果斷", "掌控", "理想", "人際"]);
-  const intro = sum(["分析", "事務", "創意", "感覺"]);
-  const rational = sum(["果斷", "分析", "掌控", "事務"]);
-  const emotional = sum(["創意", "感覺", "理想", "人際"]);
-  const action = sum(["掌控", "事務", "感覺", "人際"]);
-  const thinking = sum(["果斷", "分析", "創意", "理想"]);
 
   const archetypeScores = {
     logic: sum(["果斷", "分析"]),
@@ -132,6 +138,7 @@ function showResult() {
 
   resultDiv.innerHTML = `
     <div class="archetype-hero">
+      <div class="result-meta"><strong>${escapeHtml(userName)}</strong> ・ ${formatDateTime(completedAt)}</div>
       <div class="archetype-icons">${primary.icon}${secondary ? " " + secondary.icon : ""}</div>
       <div class="archetype-title">${primary.name}${secondary ? " ✕ " + secondary.name : ""}</div>
       <div class="archetype-subtitle">${primary.subtitle}${secondary ? " × " + secondary.subtitle : ""}</div>
@@ -140,46 +147,9 @@ function showResult() {
       ${secondary ? `<p class="archetype-desc">${secondary.description}</p>` : ""}
     </div>
 
-    <div class="section-title">壹、八種風格類型分析一覽表</div>
-    <table>
-      <tr><th>果斷</th><th>分析</th><th>創意</th><th>理想</th></tr>
-      <tr>
-        <td>${scores["果斷"] || 0}</td><td>${scores["分析"] || 0}</td>
-        <td>${scores["創意"] || 0}</td><td>${scores["理想"] || 0}</td>
-      </tr>
-      <tr><th>掌控</th><th>事務</th><th>感覺</th><th>人際</th></tr>
-      <tr>
-        <td>${scores["掌控"] || 0}</td><td>${scores["事務"] || 0}</td>
-        <td>${scores["感覺"] || 0}</td><td>${scores["人際"] || 0}</td>
-      </tr>
-    </table>
-
-    <div class="section-title">貳、三種風格特質分析一覽表</div>
-    <table>
-      <tr><th>外向 vs 內向</th><th>理性 vs 感性</th><th>行動 vs 思考</th></tr>
-      <tr>
-        <td>${extro} vs ${intro}</td>
-        <td>${rational} vs ${emotional}</td>
-        <td>${action} vs ${thinking}</td>
-      </tr>
-    </table>
-
-    <div class="section-title">參、四種風格類型分析一覽表</div>
-    <table>
-      <tr><th>理智</th><th>開創</th><th>組織</th><th>情感</th></tr>
-      <tr>
-        <td>${archetypeScores.logic}</td><td>${archetypeScores.pioneer}</td>
-        <td>${archetypeScores.organizer}</td><td>${archetypeScores.emotion}</td>
-      </tr>
-    </table>
-
     <div class="share-row">
       <button id="btn-share">🔗 分享結果</button>
       <button id="btn-retake" class="secondary">🔄 重新測驗</button>
-    </div>
-    <div class="cta">
-      想更深入了解自己的命盤與運勢？<br>
-      歡迎找 <a href="https://miao-xian.com" target="_blank" rel="noopener">命理喵仙</a> 聊聊 🐾
     </div>
   `;
 
@@ -233,4 +203,20 @@ function resetQuiz() {
   renderStep();
 }
 
-renderStep();
+function startQuiz() {
+  const val = document.getElementById("name-input").value.trim();
+  if (!val) {
+    alert("請輸入姓名才能開始測驗");
+    return;
+  }
+  userName = val;
+  document.getElementById("start-screen").classList.add("hidden");
+  document.getElementById("progress-wrap").classList.remove("hidden");
+  document.getElementById("quiz").classList.remove("hidden");
+  renderStep();
+}
+
+document.getElementById("start-btn").onclick = startQuiz;
+document.getElementById("name-input").addEventListener("keydown", e => {
+  if (e.key === "Enter") startQuiz();
+});

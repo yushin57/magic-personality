@@ -52,6 +52,47 @@ h1 {
   opacity: 0.85;
 }
 
+/* 開始畫面（姓名輸入） */
+.start-screen {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+}
+
+.start-screen label {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.start-screen input {
+  flex: 1 1 160px;
+  padding: 0.65rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  color: var(--ink);
+}
+
+.start-screen input::placeholder {
+  color: var(--ink-dim);
+  opacity: 0.7;
+}
+
+.start-screen input:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 10px rgba(232, 200, 120, 0.3);
+}
+
 /* 進度條 */
 #progress-wrap {
   margin: 2rem 0 1.5rem;
@@ -174,6 +215,21 @@ button.secondary:hover {
   background: linear-gradient(160deg, rgba(232, 200, 120, 0.12), rgba(255, 255, 255, 0.03));
   border: 1px solid var(--card-border);
   margin-bottom: 1.75rem;
+}
+
+.result-meta {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: var(--ink-dim);
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  margin-bottom: 1rem;
+}
+
+.result-meta strong {
+  color: var(--gold);
 }
 
 .archetype-icons {

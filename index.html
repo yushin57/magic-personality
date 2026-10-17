@@ -27,12 +27,18 @@
     <p class="intro">探索你內在的特質與潛能！這是一份深入了解自我風格的心理測驗，透過 5 組直覺式選擇，發掘你在人際互動、思考方式、情感反應中的潛藏傾向。</p>
     <p class="intro hint">🧠 共 5 題，每題 8 選 4 → 4 選 2 → 2 選 1，約 3～5 分鐘完成。</p>
 
-    <div id="progress-wrap">
+    <div id="start-screen" class="start-screen">
+      <label for="name-input">姓名</label>
+      <input type="text" id="name-input" placeholder="請輸入你的姓名" autocomplete="off">
+      <button id="start-btn">開始測驗 ✨</button>
+    </div>
+
+    <div id="progress-wrap" class="hidden">
       <div id="progress-track"><div id="progress-bar"></div></div>
       <div id="progress-label"></div>
     </div>
 
-    <div id="quiz"></div>
+    <div id="quiz" class="hidden"></div>
     <div id="result" class="result hidden"></div>
   </div>
 
